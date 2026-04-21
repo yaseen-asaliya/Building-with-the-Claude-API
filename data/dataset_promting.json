@@ -1,0 +1,49 @@
+[
+  {
+    "prompt_inputs": {
+      "height": "178 cm",
+      "weight": "85 kg",
+      "goal": "Muscle recovery and strength gains from weightlifting training",
+      "restrictions": "None"
+    },
+    "solution_criteria": [
+      "Includes 4-5 meals with protein distributed across each meal (minimum 25-30g per meal)",
+      "Contains specific pre-workout meal (1-2 hours before training) and post-workout meal (within 1 hour after training)",
+      "Provides realistic, compact meal descriptions with approximate calorie and macronutrient content"
+    ],
+    "task_description": "Write a compact consice one day meal plan for a single athlete",
+    "scenario": "Testing with a strength/power athlete (weightlifter) focusing on protein distribution across meals and pre/post-workout nutrition for muscle recovery"
+  },
+  {
+    "prompt_inputs": {
+      "height": "180 cm",
+      "weight": "70 kg",
+      "goal": "Marathon training - high carbohydrate intake with strategic timing around 20km run",
+      "restrictions": "Vegetarian, no nuts"
+    },
+    "solution_criteria": [
+      "Meal plan covers one full day with breakfast, lunch, dinner, and pre/post-workout meals",
+      "Calorie and carbohydrate intake appropriate for marathon runner in training phase",
+      "Meals strategically timed around training session with adequate pre-workout fuel and post-workout recovery nutrition",
+      "All meals respect vegetarian diet and nut-free restrictions"
+    ],
+    "task_description": "Write a compact consice one day meal plan for a single athlete",
+    "scenario": "Testing with a high-endurance athlete (marathon runner) requiring high calorie intake and carbohydrate loading with specific timing around training sessions"
+  },
+  {
+    "prompt_inputs": {
+      "height": "178",
+      "weight": "72",
+      "goal": "optimize performance and recovery for soccer match",
+      "restrictions": "vegan"
+    },
+    "solution_criteria": [
+      "Meal plan is one day with compact formatting",
+      "All meals and snacks are vegan with no animal products",
+      "Includes complete protein sources (legumes, tofu, nuts, seeds) distributed across meals",
+      "Macronutrients support athletic performance (adequate carbohydrates for energy, protein for recovery)"
+    ],
+    "task_description": "Write a compact consice one day meal plan for a single athlete",
+    "scenario": "Testing with a sport-specific dietary restriction (vegan soccer player) requiring balanced macronutrients and complete protein sources while maintaining performance standards"
+  }
+]
