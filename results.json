@@ -1,0 +1,32 @@
+[
+  {
+    "output": "\nimport re\nimport json\n\ndef parse_cloudwatch_log(log_event):\n    pattern = r'^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)\\s+(\\[?(ERROR|WARN|INFO|DEBUG|TRACE)\\]?)\\s+(.*)$'\n    \n    match = re.match(pattern, log_event, re.IGNORECASE)\n    \n    if match:\n        return {\n            \"timestamp\": match.group(1),\n            \"log_level\": match.group(3).upper(),\n            \"message\": match.group(4)\n        }\n    \n    return None\n\nlog_events = [\n    \"2024-01-15T10:30:45.123Z [ERROR] Database connection failed\",\n    \"2024-01-15T10:30:46.456Z [WARN] Retry attempt 1 of 3\",\n    \"2024-01-15T10:30:47.789Z [INFO] Request processed successfully\",\n    \"2024-01-15T10:30:48.012Z [DEBUG] Variable x = 42\"\n]\n\nresults = []\nfor event in log_events:\n    parsed = parse_cloudwatch_log(event)\n    if parsed:\n        results.append(parsed)\n\nprint(json.dumps(results, indent=2))\n",
+    "test_case": {
+      "task": "Parse an AWS CloudWatch log event and extract the timestamp, log level, and message using a regular expression",
+      "format": "regex",
+      "solution_criteria": "The regex should correctly capture timestamp (ISO 8601 format), log level (ERROR, WARN, INFO, DEBUG), and the remaining message text from a CloudWatch log line"
+    },
+    "score": 3.5,
+    "reasoning": "The solution successfully parses the provided test cases and meets the core requirement of extracting timestamp, log level, and message. The regex pattern is well-structured for typical CloudWatch log formats. However, the optional bracket logic creates potential brittleness - the pattern would fail on formats like 'ERROR' (no brackets) or 'WARN|' (malformed). The absence of input validation and error messages reduces robustness for real-world AWS CloudWatch logs which may have varied formats. A more flexible regex or format validation would improve reliability."
+  },
+  {
+    "output": "\nimport re\n\ndef is_valid_s3_bucket_name(bucket_name: str) -> bool:\n    if not isinstance(bucket_name, str):\n        return False\n    \n    if len(bucket_name) < 3 or len(bucket_name) > 63:\n        return False\n    \n    if not re.match(r'^[a-z0-9-]+$', bucket_name):\n        return False\n    \n    if bucket_name.startswith('-') or bucket_name.endswith('-'):\n        return False\n    \n    if '..' in bucket_name:\n        return False\n    \n    if re.search(r'(\\d+\\.){3}\\d+', bucket_name):\n        return False\n    \n    return True\n",
+    "test_case": {
+      "task": "Write a Python function that takes an AWS S3 bucket name and returns True if it follows AWS naming conventions (lowercase, alphanumeric and hyphens only, 3-63 characters)",
+      "format": "python",
+      "solution_criteria": "Function must validate bucket name length, allowed characters (lowercase letters, numbers, hyphens), and return a boolean result"
+    },
+    "score": 9.0,
+    "reasoning": "The solution fully satisfies the core requirements and demonstrates good defensive programming by validating AWS S3 naming rules beyond the minimum specification. The regex pattern is correct and efficient. The additional validations reflect real AWS constraints (buckets cannot contain consecutive dots or be formatted as IP addresses), making this a robust implementation. Minor documentation would improve code clarity."
+  },
+  {
+    "output": "\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"s3:GetObject\",\n        \"s3:GetObjectVersion\",\n        \"s3:GetObjectTagging\",\n        \"s3:ListBucket\",\n        \"s3:GetBucketLocation\",\n        \"s3:GetBucketVersioning\",\n        \"s3:ListBucketVersions\"\n      ],\n      \"Resource\": [\n        \"arn:aws:s3:::specific-bucket-name\",\n        \"arn:aws:s3:::specific-bucket-name/*\"\n      ]\n    }\n  ]\n}\n",
+    "test_case": {
+      "task": "Create a JSON CloudFormation template fragment for an AWS IAM policy that allows read-only access to a specific S3 bucket",
+      "format": "json",
+      "solution_criteria": "JSON must include proper IAM policy structure with Effect, Action, and Resource fields; actions should be limited to s3:GetObject and s3:ListBucket"
+    },
+    "score": 7.5,
+    "reasoning": "While the solution demonstrates solid IAM policy structure and includes necessary read-only access, it directly violates the stated criteria by exceeding the specified action scope. The criteria explicitly requires limiting actions to s3:GetObject and s3:ListBucket only, but the solution includes 7 total actions. Although these additional actions are read-only and reasonable for practical use, they don't meet the specified requirements."
+  }
+]
